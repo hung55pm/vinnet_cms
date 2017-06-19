@@ -1,0 +1,48 @@
+{% extends "login_template.html" %}
+{% load i18n %}
+{% block title %}Login{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/login.css"/>
+{% endblock %}
+{% block header %}
+<!-- Header -->
+<div id="header">
+    <div id="branding">
+        <h1 id="site-name">
+            Login
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+<!-- END Header -->
+{% block content %}
+<!-- Content -->
+<div id="content" class="login">
+    <div id="content-main">
+        <form method="post" id="login-form">
+            {%csrf_token%}
+            {{ form.as_p }}
+            <div class="submit-row">
+                <input type="submit" value="{% trans 'Login' %}"/>
+            </div>
+        </form>
+
+        <form id="language_form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}"/>
+            <select name="language" id="language_select">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+    <br class="clear"/>
+</div>
+<!-- END Content -->
+{% endblock %}

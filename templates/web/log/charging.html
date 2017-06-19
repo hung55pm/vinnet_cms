@@ -1,0 +1,88 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% load simple_tags %}
+
+{%block title %}{% trans "Charging log" %}{% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb">
+    {% trans "OPERATION" %}&nbsp;&gt;&nbsp;<strong>{% trans "Charging log" %}</strong>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="grid"></div>
+<script type="text/x-kendo-template" id="toolbarTemplate">
+    <div class="toolbar">
+        <label class="category-label" for="msisdn">{% trans 'MSISDN:' %}</label>
+        <input type="search" id="msisdn" class="k-input k-textbox"/>
+        <label class="category-label" for="desc">{% trans 'Type:' %}</label>
+        <input id="desc"/>
+        <label class="category-label" for="fr">{% trans 'From:' %}</label>
+        <input type="text" id="fr"/>
+        <label class="category-label" for="to">{% trans 'To:' %}</label>
+        <input type="text" id="to"/>
+
+        <input type="button" value="Search" class="k-button k-state-default" onclick="search()"/>
+    </div>
+</script>
+
+<script type="text/javascript">
+    function search() {
+        var msisdn = $('#msisdn').val();
+        var fr = $('#fr').data('kendoDatePicker').value();
+        var to = $('#to').data('kendoDatePicker').value();
+        var desc = $('#desc').data('kendoDropDownList').value();
+
+        if(fr) fr = fr.toISOString();
+        if(to) to = to.toISOString();
+
+        if (msisdn || fr || to || desc) {
+            $('#grid').data("kendoGrid").dataSource.filter({'msisdn':msisdn,'fr':fr,'to':to,'desc': desc});
+        } else {
+            $('#grid').data("kendoGrid").dataSource.filter({});
+        }
+    }
+
+    $(document).ready(function(){
+
+        $('#grid').kendoGrid({
+            pageable: true,
+            toolbar: kendo.template($('#toolbarTemplate').html()),
+            dataSource: {
+                transport: {
+                    read: {method: 'POST', type: 'json', url:'{% url "log_charging" %}'}
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            begin_charge: {type: "date"}
+                        }
+                    },
+                    data: 'data',
+                    total: 'total',
+                },
+                pageSize: 15,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            columns: [
+                {field: "phone_number", title:"{% trans "phone" %}"},
+                {field: "begin_charge", title: "{% trans 'date' %}", format:"{0:{% get_long_date_fmt %}}"},
+                {field: "description", title: "{% trans 'description' %}"},
+            ]
+        });
+        $('#fr').kendoDatePicker();
+        $('#to').kendoDatePicker();
+        $('#desc').kendoDropDownList({
+            dataTextField: 'text', dataValueField: 'value',
+            dataSource: [
+                {text: '{% trans '--All--' %}', value: ''},
+                {text: '{% trans 'Register' %}', value: 'INIT'},
+                {text:'{% trans "Recycle" %}',value:'CIRCLE'}
+            ]
+        });
+    });
+</script>
+{% endblock %}

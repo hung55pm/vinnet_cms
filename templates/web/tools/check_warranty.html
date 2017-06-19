@@ -1,0 +1,32 @@
+{% load i18n %}
+{% if object.code == 200 %}
+    <label class="control-label col-sm-4">{% trans "Model" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.model }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "IMEI" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.imei|default:"-" }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "PTUID" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.ptuid|default:"-" }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "Status" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.message }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "Valid from" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.reg_date }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "Valid until" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.expire_date }}</label>
+    </div>
+{% else %}
+    <label class="control-label col-sm-4">{% trans "Error" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.message }}</label>
+    </div>
+{% endif %}

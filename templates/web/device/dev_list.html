@@ -1,0 +1,91 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% load simple_tags %}
+
+{% block title %}{% trans "Device list" %}{% endblock %}
+{% block breadcrumb %}
+    <div id="breadcrumb">
+        {% trans "OPERATION" %}&nbsp;&gt;&nbsp;<strong>{%trans "DEVICE LIST" %}</strong>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div id="grid"></div>
+
+<script id="accountColumnTemplate" type="text/x-kendo-template">
+    # for (var i = 0; i < data.length; i++) { #
+        <div>
+            <a href="{% url 'account' %}#= data[i].account__mobile #">
+                #= data[i].account__mobile #
+            </a>
+            [#= (data[i].type=="0" ? "{% trans "Main" %}":"{% trans "Follow"%}") #]
+        </div>
+    # } #
+</script>
+<script type="text/x-kendo-template" id="toolbarTemplate">
+    <div class="toolbar">
+        <label class="category-label" for="ptuid">{% trans 'PTUID:' %}</label>
+        <input type="search" id="ptuid" class="k-input k-textbox"/>
+        <label class="category-label" for="imei">{% trans 'IMEI:' %}</label>
+        <input type="search" id="imei" class="k-input k-textbox"/>
+        <label class="category-label" for="msisdn">{% trans 'MSISDN:' %}</label>
+        <input type="search" id="msisdn" class="k-input k-textbox"/>
+        <label class="category-label" for="account">{% trans 'Account:' %}</label>
+        <input type="search" id="account" class="k-input k-textbox"/>
+        <input type="button" value="Search" class="k-button k-state-default" onclick="search()"/>
+    </div>
+</script>
+
+<script type="text/javascript">
+    function search() {
+        var ptuid = $('#ptuid').val();
+        var imei = $('#imei').val();
+        var msisdn = $('#msisdn').val();
+        var account = $('#account').val()
+
+        if (ptuid || imei || msisdn || account) {
+            $('#grid').data("kendoGrid").dataSource.filter({'ptuid':ptuid,'imei': imei,'msisdn':msisdn,'account':account});
+        } else {
+            $('#grid').data("kendoGrid").dataSource.filter({});
+        }
+    }
+
+    var columnTemplate = kendo.template($('#accountColumnTemplate').html());
+    $(document).ready(function(){
+        $('#grid').kendoGrid({
+            toolbar: kendo.template($("#toolbarTemplate").html()),
+            dataSource: {
+                transport: {
+                    read: {type: 'POST', dataType: 'json', url: '{% url 'device' %}'}
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            ptuid: {type: "string"},
+                            akey: {type: "string"},
+                            firstactivetime: {type: "date"},
+                            producetime: {type: "date"},
+                        }
+                    },
+                    data: 'data',
+                    total: 'total',
+                },
+                pageSize: 15,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            columns: [
+                {field: 'ptuid', title:'{% trans "ptuid" %}', template: '<a href="{% url 'device' %}#= ptuid # ">#= ptuid #</a>'},
+                {field: 'akey', title: '{% trans "akey" %}'},
+                {field: 'imei', title: '{% trans "imei" %}'},
+                {field: 'cdma_tid', title: '{% trans "msisdn" %}'},
+                {field: 'accounts', title:'{% trans "connected accounts" %}', template: "#= columnTemplate(accounts) #"},
+                {field: 'producetime', title:'{% trans "produce time" %}',format:'{0:{% get_long_date_fmt %}}'},
+                {field: 'firstactivetime', title: '{% trans "first active time" %}',format:'{0:{% get_long_date_fmt %}}'},
+            ],
+            pageable: true,
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% load simple_tags %}
+
+{% block title %}{% trans 'Account list' %}{% endblock %}
+{% block breadcrumb %}
+    <div id="breadcrumb">
+        {% trans "OPERATION &gt; <strong>ACCOUNT LIST</strong>" %}
+    </div>
+{% endblock %}
+
+{% block content %}
+<div id="grid"></div>
+
+<script id="accountColumnTemplate" type="text/x-kendo-template">
+    # for (var i = 0; i < data.length; i++) { #
+        <div>
+            <a href="{% url 'device' %}#= data[i].ptuid #">#= data[i].ptuid #</a>
+            [#= data[i].type=="0"?"{% trans "Main" %}":"{% trans "Follow" %}"#]
+        </div>
+    # } #
+</script>
+<script type="text/x-kendo-template" id="toolbarTemplate">
+    <div class="toolbar">
+        <label class="category-label" for="account">{% trans 'Account:' %}</label>
+        <input type="search" id="account" class="k-input k-textbox"/>
+        <input type="button" value="Search" class="k-button k-state-default" onclick="search()"/>
+    </div>
+</script>
+
+<script type="text/javascript">
+    function search() {
+        var account = $('#account').val()
+        if (account) {
+            $('#grid').data("kendoGrid").dataSource.filter({'account':account});
+        } else {
+            $('#grid').data("kendoGrid").dataSource.filter({});
+        }
+    }
+
+    var columnTemplate = kendo.template($('#accountColumnTemplate').html());
+    $(document).ready(function(){
+        $('#grid').kendoGrid({
+            toolbar: kendo.template($("#toolbarTemplate").html()),
+            dataSource: {
+                transport: {
+                    read: {type: 'POST', dataType: 'json', url: '{% url 'account' %}'}
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            accountname: {type: "string"},
+                            createtime: {type: "date"},
+                            lastlogintime: {type: "date"}
+                        }
+                    },
+                    data: 'data',
+                    total: 'total',
+                },
+                pageSize: 15,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            columns: [
+                //{field: 'accountname', title: '{% trans "account name" %}'},
+                {field: 'mobile', title: '{% trans "mobile" %}',template: '<a href="{% url 'account' %}#= mobile # ">#= mobile #</a>', width:110},
+                {field: 'devices', title: '{% trans "connected devices" %}', template:'#= columnTemplate(devices) #'},
+                {field: 'createtime', title: '{% trans "create time" %}',format:'{0:{% get_long_date_fmt %}}', width:160},
+                //{field: 'lastlogintime', title: '{% trans "last login time" %}',format:'{0:{% get_long_date_fmt %}}'},
+            ],
+            pageable: true,
+        });
+    });
+</script>
+{% endblock %}

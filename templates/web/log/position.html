@@ -1,0 +1,74 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% load simple_tags %}
+
+{%block title %}{% trans "Position log" %}{% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb">
+    {% trans "OPERATION" %}&nbsp;&gt;&nbsp;<strong>{% trans "Position log" %}</strong>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="grid"></div>
+<script type="text/x-kendo-template" id="toolbarTemplate">
+    <div class="toolbar">
+        <label class="category-label" for="ptuid">{% trans 'PTUID:' %}</label>
+        <input type="search" id="ptuid" class="k-input k-textbox"/>
+        <label class="category-label" for="loc_date">{% trans 'Date:' %}</label>
+        <input type="text" id="loc_date"/>
+        <input type="button" value="Search" class="k-button k-state-default" onclick="search()"/>
+    </div>
+</script>
+
+<script type="text/javascript">
+    function search() {
+        var ptuid = $('#ptuid').val();
+        var loc_date = $('#loc_date').data('kendoDatePicker').value();
+        if(loc_date) loc_date = loc_date.toISOString();
+        if (ptuid || loc_date) {
+            $('#grid').data("kendoGrid").dataSource.filter({'ptuid':ptuid,'loc_date':loc_date});
+        } else {
+            $('#grid').data("kendoGrid").dataSource.filter({});
+        }
+    }
+
+    $(document).ready(function(){
+
+        $('#grid').kendoGrid({
+            pageable: true,
+            toolbar: kendo.template($('#toolbarTemplate').html()),
+            dataSource: {
+                transport: {
+                    read: {method: 'POST', type: 'json', url:'{% url "log_position" %}'}
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            uptime: {type: "date"}
+                        }
+                    },
+                    data: 'data',
+                    total: 'total',
+                },
+                pageSize: 15,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            columns: [
+                {field: "ptuid", title:"{% trans "ptuid" %}", width:100},
+                {field: "uptime", title:"{% trans "date" %}", format:"{0:{% get_long_date_fmt %}}"},
+                {field: "lat", title: "{% trans 'latitude' %}"},
+                {field: "long", title: "{% trans 'longitude' %}"},
+                {field: "radius", title: "{% trans 'radius' %}", width:100},
+                {field: "bat", title: "{% trans 'battery' %}",width:100},
+                {field: "from", title: "{% trans 'type' %}", width:100},
+                {field: "mi1", title: "{% trans 'reason' %}", width:100},
+            ]
+        });
+        $('#loc_date').kendoDatePicker();
+    });
+</script>
+{% endblock %}

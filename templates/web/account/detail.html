@@ -1,0 +1,76 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% load simple_tags %}
+{% block title %}{% trans 'Account:' %} {{account.mobile}}{% endblock %}
+
+{% block breadcrumb %}
+<div id="breadcrumb">
+    {% trans "OPERATION" %} &gt;
+    <a href="{% url 'account' %}">{% trans "ACCOUNT LIST" %}</a> &gt;&nbsp;<strong>{{account.mobile}}</strong>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-4">
+        <div class="ra-section k-grid k-widget k-display-block">
+            <div class="k-grouping-header" data-role="droptarget">{% trans "Account profile" %}</div>
+            <table>
+                <tbody>
+                <tr>
+                    <td>{% trans 'MOBILE' %}</td>
+                    <td><h4>{{ account.mobile }}</h4></td>
+                </tr>
+                <tr class="k-alt">
+                    <td>{% trans 'API KEY' %}</td>
+                    <td>{{ account.api_key }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'CREATE TIME' %}</td>
+                    <td>{{ account.createtime }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div id="device-grid">
+            <div class="k-grouping-header" data-role="droptarget">{% trans "Connected watches" %}</div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var grids = {
+                'device-grid': {
+                    dataSource: {
+                        transport: {
+                            read: {type: 'POST', dataType: 'json', url: '{% url "account_devices" account.mobile %}'}
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    ptuid: {type: "string"},
+                                    type: {type: "number"},
+                                    createtime: {type: "date"}
+                                }
+                            },
+                        },
+                        serverPaging: true,
+                        pageSize: 15
+                    },
+                    columns: [
+                        {field: 'ptuid', title: '{% trans "ptuid" %}', template: '<a href="{% url 'device' %}#= ptuid #">#= ptuid #</a>'},
+                        {field: 'type', title: '{% trans "account type" %}', template:'#= (type==0?"{% trans "Main" %}":"{% trans "Follow" %}") #', width:60},
+                        {field: 'createtime', title: 'date',format:'{0:{% get_long_date_fmt %}}'}
+                    ],
+                    pageable:{refresh:true}
+                }
+            }
+            $('#device-grid').kendoGrid(grids['device-grid']);
+        });
+
+    </script>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{LANGUAGE_CODE}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="NONE,NOARCHIVE"/>
+    <title>{% block title %}Index{% endblock %} | VinnetCMS</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css" />
+    {% block css %}{% endblock %}
+
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/common.js"></script>
+
+    {% block scripts %}{% endblock %}
+</head>
+<body>
+<div id="container">
+    {% block header %}{% endblock %}
+    {% block breadcrumb %}{% endblock %}
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

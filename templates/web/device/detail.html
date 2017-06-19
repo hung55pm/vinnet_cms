@@ -1,0 +1,256 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% load simple_tags %}
+
+{% block title %}{% trans 'Device:' %} {{ device.hex_ptuid }}{% endblock %}
+{% block breadcrumb %}
+<div id="breadcrumb">
+    {% trans "OPERATION" %} &gt;
+    <a href="{% url 'device' %}">{% trans "DEVICE LIST" %}</a> &gt;&nbsp;<strong>{{device.hex_ptuid}}</strong>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row clearfix">
+    <div class="col-lg-4">
+        <div class="ra-section k-grid k-widget k-display-block">
+            <div class="k-grouping-header" data-role="droptarget">{% trans "Watch profile" %}</div>
+            <table>
+                <tbody>
+                <tr>
+                    <td>{% trans 'PTUID' %}</td>
+                    <td><h4>{{ device.hex_ptuid }}</h4></td>
+                </tr>
+                <tr class="k-alt">
+                    <td>{% trans 'AKEY' %}</td>
+                    <td><h4>{{ device.hex_akey }}</h4></td>
+                </tr>
+                <tr>
+                    <td>{% trans 'IMEI' %}</td>
+                    <td>{{ device.imei }}</td>
+                </tr>
+                <tr class="k-alt">
+                    <td>{% trans 'MSISDN' %}</td>
+                    <td>{{ device.cdma_tid|default:"" }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'LAST UPTIME' %}</td>
+                    <td>{{ device.lastuptime|default:"" }}</td>
+                </tr>
+                <tr class="k-alt">
+                    <td>{% trans 'PRODUCE TIME' %}</td>
+                    <td>{{ device.producetime|default:"" }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'FIRST ACTIVE TIME' %}</td>
+                    <td>{{ device.firstactivetime|default:"" }}</td>
+                </tr>
+                <tr class="k-alt">
+                    <td>{% trans 'PURCHASE ORDER' %}</td>
+                    <td>{{ device.watchproduct.po|default:"" }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans 'COLOR' %}</td>
+                    <td>{{ device.watchproduct.color|default:"" }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div id="account-grid">
+            <div class="k-grouping-header" data-role="droptarget">{% trans "Connected accounts" %}</div>
+        </div>
+        <br/>
+    </div>
+
+    <div class="col-lg-8">
+        <ul id="panelbar">
+            <li class="k-state k-active k-state-active">
+                <span class="k-link k-state-selected">{% trans "Charging history" %}</span>
+                <div id="charging-grid" class="toogle-grid"/>
+            </li>
+            <li class="k-state k-active">
+                <span class="k-link">{% trans "SMS History" %}</span>
+                <div id="sms-grid" class="toogle-grid"/>
+            </li>
+            <li>
+                <span class="k-link">{% trans "Topup history" %}</span>
+                <div id="topup-grid" class="toogle-grid"/>
+            </li>
+            <li>
+                <span class="k-link">{% trans "Unbind history" %}</span>
+                <div id="unbind-grid" class="toogle-grid"/>
+            </li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#account-grid').kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {type: 'POST', dataType: 'json', url: '{% url 'device_accounts' device.hex_ptuid %}'}
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                mobile: {type: "string"},
+                                type: {type: "number"},
+                                createtime: {type: "date"}
+                            }
+                        }
+                    },
+                    serverPaging: true,
+                    pageSize: 15
+                },
+                columns: [
+                    {field: 'mobile', title: '{% trans "mobile" %}', template:'<a href="{% url "account" %}#= mobile #">#=mobile#</a>', width: 110},
+                    {field: 'type', title: '{% trans "account type" %}', template:'#= (type==0?"{% trans "Main" %}":"{% trans "Follow" %}") #', width:60},
+                    {field: 'createtime', title: '{% trans "create time" %}',format:'{0:{% get_long_date_fmt %}}', width:180},
+                    //{command: [{name:'destroy',text:'',width:40}], width: 70}
+                ],
+                pageable: {refresh:true}
+            });
+            toggle_grid = {
+                'charging-grid': {
+                    height: 200,
+                    pageable: {pageSize: 10,refresh:true},
+                    dataSource: {
+                        transport: {
+                            read: {type: 'POST', dataType: 'json', url: '{% url 'sub_charging' device.cdma_tid %}'}
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    msisdn: {type: "string"},
+                                    begin_charge: {type: "date"}
+                                }
+                            },
+                            data: 'data',
+                            total: 'total',
+                        },
+                        pageSize: 10,
+                        serverPaging: true,
+                    },
+                    columns: [
+                        {field: 'msisdn',title:'{% trans "mobile" %}', width:110},
+                        {field: 'begin_charge',title:'{% trans "date" %}',format:'{0:{% get_long_date_fmt %}}',width:160},
+                        {field: 'description',title:'{% trans "description" %}'}
+                    ]
+                },
+                'sms-grid': {
+                    height: 200,
+                    pageable: {pageSize: 10,refresh:true},
+                    dataSource: {
+                        transport: {
+                            read: {type: 'POST', dataType: 'json', url: '{% url 'sub_sms' device.cdma_tid %}'}
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    msisdn: {type: "string"},
+                                    gen_date: {type: "date"},
+                                    content: {type: "string"},
+                                    code: {type: "number"},
+                                    message: {type: "string"},
+                                }
+                            },
+                            data: 'data',
+                            total: 'total',
+                        },
+                        pageSize: 10,
+                        serverPaging: true,
+                    },
+                    columns: [
+                        {field: 'msisdn',title:'{% trans "mobile" %}', width:110},
+                        {field: 'gen_date',title:'{% trans "date" %}',format:'{0:{% get_long_date_fmt %}}',width:160},
+                        {field: 'content',title:'{% trans "content" %}'},
+                        {field: 'message',title:'{% trans "message" %}', width:100}
+                    ]
+                },
+                'topup-grid': {
+                    height: 200,
+                    pageable: {pageSize: 10,refresh:true},
+                    dataSource: {
+                        transport: {
+                            read: {type: 'POST', dataType: 'json', url: '{% url 'sub_topup' device.cdma_tid %}'}
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    msisdn: {type: "string"},
+                                    gen_date: {type: "date"},
+                                    card_value: {type: "number"}
+                                }
+                            },
+                            data: 'data',
+                            total: 'total',
+                        },
+                        pageSize: 10,
+                        serverPaging: true,
+                    },
+                    columns: [
+                        {field: 'from_account',title:'{% trans "from" %}', width:110},
+                        {field: 'msisdn',title:'{% trans "to" %}', width:110},
+                        {field: 'gen_date',title:'{%trans "date" %}',format:'{0:{% get_long_date_fmt %}}',width:160},
+                        {field: 'card_value',title:'{% trans "card value" %}',format:'', width:100},
+                        {field: 'description',title:'{% trans "description" %}'}
+                    ]
+                },
+                'unbind-grid': {
+                    height: 200,
+                    pageable: {pageSize: 10,refresh:true},
+                    dataSource: {
+                        transport: {
+                            read: {type: 'POST', dataType: 'json', url: '{% url 'device_unbind_history' device.hex_ptuid %}'}
+                        },
+                        schema: {
+                            model: {
+                                fields: {
+                                    accountname: {type: "string"},
+                                    ptuid: {type: "string"},
+                                    createtime: {type: "date"}
+                                }
+                            },
+                            data: 'data',
+                            total: 'total',
+                        },
+                        pageSize: 10,
+                        serverPaging: true,
+                    },
+                    columns: [
+                        {field: 'ptuid',title:'ptuid', width:110},
+                        {field: 'accountname',title:'{% trans "account" %}', width:110},
+                        {field: 'createtime',title:'{% trans "date" %}',format:'{0:{% get_long_date_fmt %}}'},
+                    ]
+                }
+            }
+            function initGrid(grid) {
+                $(grid).kendoGrid( toggle_grid[$(grid).attr('id')] );
+            }
+            function onExpand(e) {
+                grid = $(e.item).find('> .toogle-grid');
+                initGrid(grid);
+            }
+            function onCollapse(e) {
+                grid = $(e.item).find('> .toogle-grid');
+                if($(grid).data('kendoGrid')) {
+                    console.log('destroying grid...');
+                    $(grid).data('kendoGrid').destroy();
+                }
+            }
+
+            $("#panelbar").kendoPanelBar({
+                expandMode: "single",
+                expand: onExpand,
+                collapse: onCollapse,
+                expanded: true
+            });
+            //$('#charging-grid').kendoGrid(toggle_grid['charging-grid']);
+        });
+
+    </script>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "login_template.html" %}
+{% load i18n %}
+{% load simple_tags %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/lib/bootstrap/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/lib/kendo/kendo.common.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/lib/kendo/kendo.bootstrap.min.css"/>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="/static/js/lib/kendo/kendo.all.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/kendo/cultures/kendo.culture.{% get_current_culture %}.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/kendo/messages/kendo.messages.{% get_current_culture %}.min.js"></script>
+<script>
+    kendo.culture("{% get_current_culture %}");
+</script>
+{% endblock %}
+
+{% block header%}
+<div id="header">
+    <div id="branding">
+        <h1 id="site-name"><a href="{% url 'index' %}">VinnetCMS</a></h1>
+    </div>
+    <div id="user-tools">
+        {% trans "Welcome," %}
+        <strong>{{ request.user }}</strong>.
+
+        <a href="/accounts/password_change/">{% trans "Change password" %}</a> /
+        <a href="/accounts/logout/?next=/web">{% trans "Log out" %}</a>
+    </div>
+
+    <form id="language_form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}"/>
+        <select name="language" id="language_select">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    <script type="text/javascript">
+        $('#language_select').on('change', function(){$('#language_form').submit();});
+    </script>
+</div>
+<div id="nav_bar">
+    <ul id="nav">
+        <li>{% trans "System" %}
+            <ul>
+                <li>Products
+                    <ul>
+                        <li><a href="#">Product category</a></li>
+                        <li><a href="#">Product List</a></li>
+                    </ul>
+                </li>
+                <li>Subscribers</li>
+                <li>System Users</li>
+                <li>History</li>
+            </ul>
+        </li>
+        <li>Report</li>
+        <li>{% trans "Operation" %}
+            <ul>
+                <li><a href="{% url 'device' %}">{% trans "Device List" %}</a></li>
+                <li><a href="{% url 'account' %}">{% trans "Account List" %}</a></li>
+                <li class="k-separator"></li>
+                <li><a href="{% url 'tools' %}">{% trans "Tools" %}</a></li>
+                <li class="k-separator"></li>
+                <li>{% trans "Logging" %}
+                    <ul>
+                        <li><a href="{% url 'log_charging' %}">{% trans "Charging log" %}</a></li>
+                        <li><a href="#">{% trans "Topup log" %}</a></li>
+                        <li><a href="#">{% trans "SMS log" %}</a></li>
+                        <li class="k-separator"></li>
+                        <li><a href="{% url 'log_position' %}">{% trans "Device position" %}</a></li>
+                        <li><a href="#">{% trans "Device recording" %}</a></li>
+                        <li><a href="#">{% trans "Account message" %}</a></li>
+                        <li><a href="#">{% trans "Device message" %}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
+        <li>Help</li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){$('#nav').kendoMenu();})
+</script>
+
+{% endblock %}

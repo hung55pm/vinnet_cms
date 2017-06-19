@@ -1,0 +1,32 @@
+{% load i18n %}
+{% if object.code == 200 %}
+    <label class="control-label col-sm-4">{% trans "Package" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.name }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "Balance" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.balance }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "Free calls" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.promoBalance }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "Free data" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.data }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "Last extended" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.lastExtended }}</label>
+    </div>
+    <label class="control-label col-sm-4">{% trans "Expire date" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.expiredDate }}</label>
+    </div>
+{% else %}
+    <label class="control-label col-sm-4">{% trans "Error" %}</label>
+    <div class="col-sm-8">
+        <label class="control-label">{{ object.message }}</label>
+    </div>
+{% endif %}
