@@ -77,9 +77,10 @@
                         <li><a href="#">{% trans "SMS log" %}</a></li>
                         <li class="k-separator"></li>
                         <li><a href="{% url 'log_position' %}">{% trans "Device position" %}</a></li>
-                        <li><a href="#">{% trans "Device recording" %}</a></li>
-                        <li><a href="#">{% trans "Account message" %}</a></li>
-                        <li><a href="#">{% trans "Device message" %}</a></li>
+                         <li><a href="{% url 'log_recording' %}">{% trans "Device recording" %}</a></li>
+                        <li><a href="{% url 'log_acount_message' %}">{% trans "Account message" %}</a></li>
+                        <li><a href="{% url 'log_device_message' %}">{% trans "Device message" %}</a></li>
+
                     </ul>
                 </li>
 

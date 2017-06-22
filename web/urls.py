@@ -40,5 +40,8 @@ urlpatterns = [
     url(r'^tools/(?P<action>[\w-]+)/$', ToolsActionView.as_view(), name="tool_action"),
 
     url('^log/charging$', LogChargingView.as_view(), name='log_charging'),
-    url('^log/position$', LogPositionView.as_view(), name='log_position')
+    url('^log/position$', LogPositionView.as_view(), name='log_position'),
+    url('^log/acount_message', LogAcountMessageView.as_view(), name='log_acount_message'),
+    url('^log/device_message', LogDeviceMessageView.as_view(), name='log_device_message'),
+    url('^log/recording', LogRecordingView.as_view(), name='log_recording')
 ]

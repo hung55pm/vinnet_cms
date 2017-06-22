@@ -2,5 +2,10 @@
 # https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi
 
 
+# install gettext version >0.15
+#https://mlocati.github.io/articles/gettext-iconv-windows.html
+
+
 pip install requests
 pip install PyCrypto
+

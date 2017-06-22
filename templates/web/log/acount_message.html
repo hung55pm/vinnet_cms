@@ -1,0 +1,69 @@
+{% extends "template.html" %}
+{% load i18n %}
+{% load simple_tags %}
+
+{%block title %}{% trans "Acount Message" %}{% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb">
+    {% trans "OPERATION" %}&nbsp;&gt;&nbsp;<strong>{% trans "Acount Message" %}</strong>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="grid"></div>
+<script type="text/x-kendo-template" id="toolbarTemplate">
+    <div class="toolbar">
+        <label class="category-label" for="mobile">{% trans 'Parent phone number:' %}</label>
+        <input type="search" id="mobile" class="k-input k-textbox"/>
+        <label class="category-label" for="loc_date">{% trans 'Date:' %}</label>
+        <input type="text" id="loc_date"/>
+        <input type="button" value="Search" class="k-button k-state-default" onclick="search()"/>
+    </div>
+</script>
+
+<script type="text/javascript">
+    function search() {
+        var mobile = $('#mobile').val();
+        var loc_date = $('#loc_date').data('kendoDatePicker').value();
+        if(loc_date) loc_date = loc_date.toISOString();
+        if (mobile || loc_date) {
+            $('#grid').data("kendoGrid").dataSource.filter({'mobile':mobile,'loc_date':loc_date});
+        } else {
+            $('#grid').data("kendoGrid").dataSource.filter({});
+        }
+    }
+
+    $(document).ready(function(){
+
+        $('#grid').kendoGrid({
+            pageable: true,
+            toolbar: kendo.template($('#toolbarTemplate').html()),
+            dataSource: {
+                transport: {
+                    read: {method: 'POST', type: 'json', url:'{% url "log_acount_message" %}'}
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            uptime: {type: "date"}
+                        }
+                    },
+                    data: 'data',
+                    total: 'total',
+                },
+                pageSize: 15,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            columns: [
+                {field: "mobile", title:"{% trans "Parent phone number" %}"},
+                {field: "uptime", title:"{% trans "Time" %}", format:"{0:{% get_long_date_fmt %}}"},
+                {field: "type", title: "{% trans 'Message Type' %}"},
+            ]
+        });
+        $('#loc_date').kendoDatePicker();
+    });
+</script>
+{% endblock %}

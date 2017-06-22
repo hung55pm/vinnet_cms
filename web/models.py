@@ -172,3 +172,81 @@ def create_position_log_model(for_date):
         mi1 = models.IntegerField()
 
     return WatchPosition
+
+
+def create_recording_log_model(for_date):
+
+    class CustomMetaClass(ModelBase):
+        def __new__(cls, name, bases, attrs):
+            table_name = '`cms_watch_active_db`.`watch_sound_%s`'
+            if isinstance(for_date, datetime.date):
+                table_name = table_name % for_date.strftime('%Y_%m')
+            else:
+                table_name = table_name % for_date
+            model = super(CustomMetaClass, cls).__new__(cls, name, bases, attrs)
+            model._meta.db_table = table_name
+            return model
+
+    class WatchSound(models.Model):
+
+        __metaclass__ = CustomMetaClass
+        # define your fileds here
+        objectid = models.BigAutoField(primary_key=True)
+        ptuid = models.IntegerField()
+        uptime = models.DateTimeField()
+        reason = models.IntegerField()
+        user_cmd = models.CharField(max_length=50)
+        rec_tot = models.IntegerField()
+        rec_ts = models.DateTimeField()
+
+
+    return WatchSound
+
+def create_acount_message_log_model(for_date):
+
+    class CustomMetaClass(ModelBase):
+        def __new__(cls, name, bases, attrs):
+            table_name = '`cms_watch_active_db`.`watch_message_%s`'
+            if isinstance(for_date, datetime.date):
+                table_name = table_name % for_date.strftime('%Y_%m')
+            else:
+                table_name = table_name % for_date
+            model = super(CustomMetaClass, cls).__new__(cls, name, bases, attrs)
+            model._meta.db_table = table_name
+            return model
+
+    class AcountMessage(models.Model):
+
+        __metaclass__ = CustomMetaClass
+        # define your fileds here
+        objectid = models.BigAutoField(primary_key=True)
+        mobile = models.CharField()
+        uptime = models.DateTimeField()
+        type = models.IntegerField()
+
+    return AcountMessage
+
+def create_device_message_log_model(for_date):
+
+    class CustomMetaClass(ModelBase):
+        def __new__(cls, name, bases, attrs):
+            table_name = '`cms_watch_active_db`.`watch_dot_%s`'
+            if isinstance(for_date, datetime.date):
+                table_name = table_name % for_date.strftime('%Y_%m')
+            else:
+                table_name = table_name % for_date
+            model = super(CustomMetaClass, cls).__new__(cls, name, bases, attrs)
+            model._meta.db_table = table_name
+            return model
+
+    class DeviceMessage(models.Model):
+
+        __metaclass__ = CustomMetaClass
+        # define your fileds here
+        objectid = models.BigAutoField(primary_key=True)
+        ptuid = models.IntegerField()
+        cdma_tid = models.CharField()
+        sms_uid = models.CharField()
+        uptime = models.DateTimeField()
+
+    return DeviceMessage

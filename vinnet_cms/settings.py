@@ -21,7 +21,6 @@ vi_formats.DATETIME_FORMAT = "d/m/Y h:i:s"
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -32,7 +31,6 @@ SECRET_KEY = '=$uyawkkilen4$(k39di=qn)6mpd%4y3m#ic5c$)%fyn0i84&)'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -77,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vinnet_cms.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -86,24 +83,23 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'cms_center_db',
-    #     'USER': 'root',
-    #     'PASSWORD': 'vinnet@123',
-    #     'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
-    #     'PORT': '3306',
-    # },
-'default': {
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cms_center_db',
-        'USER': 'kidswatch',
-        'PASSWORD': 'kidswatch@123456',
-        'HOST': '10.20.1.31',  # Or an IP Address that your DB is hosted on
+        'USER': 'root',
+        'PASSWORD': 'vinnet@123',
+        'HOST': '10.20.1.7',  # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     },
+    # 'default': {
+    #         'ENGINE': 'django.db.backends.mysql',
+    #         'NAME': 'cms_center_db',
+    #         'USER': 'kidswatch',
+    #         'PASSWORD': 'kidswatch@123456',
+    #         'HOST': '10.20.1.31',  # Or an IP Address that your DB is hosted on
+    #         'PORT': '3306',
+    #     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -123,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -136,7 +131,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -161,3 +155,5 @@ LANGUAGES = (
 PHONE_RE = "^((09|08)[0-9]{8})$|^(01[0-9]{9})$"
 IMEI_RE = "^[\d]{15}$"
 PTUID_RE = "^[0-9a-fA-F]{8}$"
+LOGIN_REDIRECT_URL = '/web'
+LOGOUT_REDIRECT_URL = '/accounts/login/'

@@ -47,7 +47,6 @@ class AccountView(LoginRequiredMixin, TemplateView):
                 "devices": list(  {"ptuid":ptu_enc(y['watch__ptuid']),"type":y['type']} for y in x.Wars.all().values('watch__ptuid','type'))
             } for x in query[skip:skip+take]]
         }
-        
         return JsonResponse(data)
 
 
@@ -310,6 +309,7 @@ class LogPositionView(LoginRequiredMixin, TemplateView):
 
         WatchPosition = create_position_log_model(loc_date)
         query = WatchPosition.objects.all()
+        print query.query
         if ptuid:
             query = query.filter(ptuid = ptu_dec(ptuid))
         data = {}
@@ -326,6 +326,123 @@ class LogPositionView(LoginRequiredMixin, TemplateView):
                     "bat": x.bat,
                     "mi1": x.mi1
                  } for x in query[skip:skip + take]]
+            }
+        except Exception as e:
+            logger.error('query error: %s', e)
+
+        return JsonResponse(data)
+
+
+
+class LogTopupView(LoginRequiredMixin, TemplateView):
+    template_name = 'web/log/topup.html'
+
+class LogRecordingView(LoginRequiredMixin, TemplateView):
+    template_name = 'web/log/recording.html'
+
+
+    def post(self, request):
+        (skip, take,) = (int(request.POST.get(x, '0')) for x in ('skip', 'take'))
+        ptuid = request.POST.get('filter[filters][0][ptuid]', None)
+        loc_date = request.POST.get('filter[filters][0][loc_date]', None)
+        if loc_date:
+            # parse from string to datetime
+            loc_date = dateparse.parse_datetime(loc_date)
+            # and convert to current timezone
+            loc_date = timezone.localtime(loc_date, timezone.get_current_timezone())
+        else:
+            loc_date = datetime.datetime.now()
+        WatchSound = create_recording_log_model(loc_date)
+        query = WatchSound.objects.filter(uptime__date=loc_date.date())
+
+        if ptuid:
+            query = query.filter(ptuid=ptu_dec(ptuid))
+        print query.query
+        data = {}
+        try:
+            data = {
+                "total": query.count(),
+                "data": [{
+                    "ptuid": ptu_enc(x.ptuid),
+                    "uptime": x.uptime,
+                    "reason": x.reason,
+                    "user_cmd": x.user_cmd,
+                    "rec_tot": x.rec_tot,
+                    "rec_ts": x.rec_ts,
+                } for x in query[skip:skip + take]]
+            }
+        except Exception as e:
+            logger.error('query error: %s', e)
+
+        return JsonResponse(data)
+
+class LogAcountMessageView(LoginRequiredMixin, TemplateView):
+    template_name = 'web/log/acount_message.html'
+
+
+    def post(self, request):
+        (skip, take,) = (int(request.POST.get(x, '0')) for x in ('skip', 'take'))
+        mobile = request.POST.get('filter[filters][0][mobile]', None)
+        loc_date = request.POST.get('filter[filters][0][loc_date]', None)
+        if loc_date:
+            # parse from string to datetime
+            loc_date = dateparse.parse_datetime(loc_date)
+            # and convert to current timezone
+            loc_date = timezone.localtime(loc_date, timezone.get_current_timezone())
+        else:
+            loc_date = datetime.datetime.now()
+        AcountMessage = create_acount_message_log_model(loc_date)
+        query = AcountMessage.objects.filter(uptime__date=loc_date.date())
+        if mobile:
+            query = query.filter(mobile=mobile)
+
+        print query.query
+        #print query.count()
+        data = {}
+        try:
+            data = {
+                "total": query.count(),
+                "data": [{
+                    "mobile": x.mobile,
+                    "uptime": x.uptime,
+                    "type": x.type,
+                } for x in query[skip:skip + take]]
+            }
+        except Exception as e:
+            logger.error('query error: %s', e)
+
+        return JsonResponse(data)
+
+
+class LogDeviceMessageView(LoginRequiredMixin, TemplateView):
+    template_name = 'web/log/device_message.html'
+
+    def post(self, request):
+        (skip, take,) = (int(request.POST.get(x, '0')) for x in ('skip', 'take'))
+        ptuid = request.POST.get('filter[filters][0][ptuid]', None)
+        loc_date = request.POST.get('filter[filters][0][loc_date]', None)
+        if loc_date:
+            # parse from string to datetime
+            loc_date = dateparse.parse_datetime(loc_date)
+            # and convert to current timezone
+            loc_date = timezone.localtime(loc_date, timezone.get_current_timezone())
+        else:
+            loc_date = datetime.datetime.now()
+        DeviceMessage = create_device_message_log_model(loc_date)
+        query = DeviceMessage.objects.filter(uptime__date=loc_date.date())
+        if ptuid:
+            query = query.filter(ptuid=ptu_dec(ptuid))
+        print query.query
+        data = {}
+        try:
+            data = {
+                "total": query.count(),
+                "data": [{
+                    "ptuid": ptu_enc(x.ptuid),
+                    "mobile": x.cdma_tid,
+                    "content": x.sms_uid,
+                    "uptime": x.uptime,
+                } for x in query[skip:skip + take]]
             }
         except Exception as e:
             logger.error('query error: %s', e)

@@ -19,7 +19,10 @@ from django.contrib import admin
 urlpatterns = [
     # include login/logout/change password...
     url('^accounts/', include('django.contrib.auth.urls')),
+
     url(r'^i18n/', include('django.conf.urls.i18n')),
+
+
     url(r'^web/', include('web.urls')),
     url(r'^admin/', admin.site.urls),
 ]

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-15 06:48+0000\n"
+"POT-Creation-Date: 2017-06-22 10:10+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,249 +18,555 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: templates/registration/login.html:27
+#: .\templates\registration\login.html:27
 msgid "Login"
 msgstr "Đăng nhập"
 
-#: templates/template.html:25
+#: .\templates\template.html:26
 msgid "Welcome,"
 msgstr "Chào mừng bạn,"
 
-#: templates/template.html:28
+#: .\templates\template.html:29
 msgid "Change password"
 msgstr "Đổi mật khẩu"
 
-#: templates/template.html:29
+#: .\templates\template.html:30
 msgid "Log out"
 msgstr "Đăng xuất"
 
-#: templates/template.html:52
+#: .\templates\template.html:52
 msgid "System"
 msgstr "Hệ thống"
 
-#: templates/template.html:66
+#: .\templates\template.html:66
 msgid "Operation"
 msgstr "Vận hành"
 
-#: templates/template.html:68
+#: .\templates\template.html:68
 msgid "Device List"
 msgstr "Thiết bị"
 
-#: templates/template.html:69
+#: .\templates\template.html:69
 msgid "Account List"
 msgstr "Tài khoản"
 
-#: templates/web/account/acc_list.html:6
+#: .\templates\template.html:71 .\templates\web\tools\tools.html:3
+msgid "Tools"
+msgstr ""
+
+#: .\templates\template.html:73
+msgid "Logging"
+msgstr ""
+
+#: .\templates\template.html:75 .\templates\web\log\charging.html:5
+#: .\templates\web\log\charging.html:9
+#, fuzzy
+#| msgid "Charging history"
+msgid "Charging log"
+msgstr "Lịch sử gia hạn"
+
+#: .\templates\template.html:76
+#, fuzzy
+#| msgid "Topup history"
+msgid "Topup log"
+msgstr "Lịch sử nạp tiền"
+
+#: .\templates\template.html:77
+msgid "SMS log"
+msgstr ""
+
+#: .\templates\template.html:79
+#, fuzzy
+#| msgid "Device List"
+msgid "Device position"
+msgstr "Thiết bị"
+
+#: .\templates\template.html:80
+msgid "Device recording"
+msgstr ""
+
+#: .\templates\template.html:81
+#, fuzzy
+#| msgid "Account List"
+msgid "Account message"
+msgstr "Tài khoản"
+
+#: .\templates\template.html:82
+#, fuzzy
+#| msgid "message"
+msgid "Device message"
+msgstr "mô tả"
+
+#: .\templates\web\account\acc_list.html:5
+#, fuzzy
+#| msgid "Account List"
+msgid "Account list"
+msgstr "Tài khoản"
+
+#: .\templates\web\account\acc_list.html:8
 #, fuzzy
 #| msgid "OPERATION &gt; <strong>DEVICE LIST</strong>"
 msgid "OPERATION &gt; <strong>ACCOUNT LIST</strong>"
 msgstr "VẬN HÀNH &gt; <strong>DANH SÁCH THIẾT BỊ</strong>"
 
-#: templates/web/account/acc_list.html:17 templates/web/device/detail.html:105
-#: templates/web/device/dev_list.html:19
+#: .\templates\web\account\acc_list.html:19
+#: .\templates\web\account\detail.html:65
+#: .\templates\web\device\detail.html:108
+#: .\templates\web\device\dev_list.html:21
 msgid "Main"
 msgstr "Chính"
 
-#: templates/web/account/acc_list.html:17
-msgid "Sub"
-msgstr "Phụ"
-
-#: templates/web/account/acc_list.html:47
-msgid "account name"
-msgstr "tên tài khoản"
-
-#: templates/web/account/acc_list.html:48 templates/web/device/detail.html:104
-#: templates/web/device/detail.html:132 templates/web/device/detail.html:161
-msgid "mobile"
-msgstr "điện thoại"
-
-#: templates/web/account/acc_list.html:49
-msgid "connected devices"
-msgstr "đồng hồ"
-
-#: templates/web/account/acc_list.html:50 templates/web/device/detail.html:106
-msgid "create time"
-msgstr "ngày tạo"
-
-#: templates/web/account/acc_list.html:51
-msgid "last login time"
-msgstr "lần đăng nhập cuối"
-
-#: templates/web/device/detail.html:6
-msgid "OPERATION"
-msgstr "VẬN HÀNH"
-
-#: templates/web/device/detail.html:7
-msgid "DEVICE LIST"
-msgstr "DANH SÁCH THIẾT BỊ"
-
-#: templates/web/device/detail.html:16
-msgid "Watch profile"
-msgstr "Thông tin đồng hồ"
-
-#: templates/web/device/detail.html:20
-msgid "PTUID"
-msgstr ""
-
-#: templates/web/device/detail.html:24
-msgid "AKEY"
-msgstr ""
-
-#: templates/web/device/detail.html:28
-msgid "IMEI"
-msgstr ""
-
-#: templates/web/device/detail.html:32
-msgid "MSISDN"
-msgstr ""
-
-#: templates/web/device/detail.html:36
-msgid "LAST UPTIME"
-msgstr "LẦN HOẠT ĐỘNG CUỐI"
-
-#: templates/web/device/detail.html:40
-msgid "PRODUCE TIME"
-msgstr "NGÀY SẢN XUẤT"
-
-#: templates/web/device/detail.html:44
-msgid "FIRST ACTIVE TIME"
-msgstr "KÍCH HOẠT LẦN ĐẦU"
-
-#: templates/web/device/detail.html:48
-msgid "PURCHASE ORDER"
-msgstr "ĐƠN HÀNG"
-
-#: templates/web/device/detail.html:52
-msgid "COLOR"
-msgstr "MÀU SẮC"
-
-#: templates/web/device/detail.html:60
-msgid "Connected accounts"
-msgstr "Tài khoản đang kết nối"
-
-#: templates/web/device/detail.html:68
-msgid "Charging history"
-msgstr "Lịch sử gia hạn"
-
-#: templates/web/device/detail.html:72
-msgid "SMS History"
-msgstr "Lịch sử tin nhắn"
-
-#: templates/web/device/detail.html:76
-msgid "Topup history"
-msgstr "Lịch sử nạp tiền"
-
-#: templates/web/device/detail.html:80
-msgid "Unbind history"
-msgstr "Lịch sử ngắt kết nối"
-
-#: templates/web/device/detail.html:105
-msgid "account type"
-msgstr "loại"
-
-#: templates/web/device/detail.html:105 templates/web/device/dev_list.html:19
+#: .\templates\web\account\acc_list.html:19
+#: .\templates\web\account\detail.html:65
+#: .\templates\web\device\detail.html:108
+#: .\templates\web\device\dev_list.html:21
 msgid "Follow"
 msgstr ""
 
-#: templates/web/device/detail.html:133 templates/web/device/detail.html:162
-#: templates/web/device/detail.html:190 templates/web/device/detail.html:219
-msgid "date"
-msgstr "ngày tháng"
-
-#: templates/web/device/detail.html:134
-msgid "reason"
-msgstr "lý do"
-
-#: templates/web/device/detail.html:163
-msgid "content"
-msgstr "nội dung"
-
-#: templates/web/device/detail.html:164
-msgid "message"
-msgstr "mô tả"
-
-#: templates/web/device/detail.html:188
-msgid "from"
-msgstr "từ"
-
-#: templates/web/device/detail.html:189
-msgid "to"
-msgstr "đến"
-
-#: templates/web/device/detail.html:191
-msgid "card value"
-msgstr "mệnh giá"
-
-#: templates/web/device/detail.html:192
-msgid "description"
-msgstr "mô tả"
-
-#: templates/web/device/detail.html:218
-msgid "account"
-msgstr "Tài khoản"
-
-#: templates/web/device/dev_list.html:3
-msgid "Device list"
-msgstr "Thiết bị"
-
-#: templates/web/device/dev_list.html:6
-msgid "OPERATION &gt; <strong>DEVICE LIST</strong>"
-msgstr "VẬN HÀNH &gt; <strong>DANH SÁCH THIẾT BỊ</strong>"
-
-#: templates/web/device/dev_list.html:25
-msgid "PTUID:"
-msgstr ""
-
-#: templates/web/device/dev_list.html:27
-msgid "IMEI:"
-msgstr ""
-
-#: templates/web/device/dev_list.html:29
-msgid "MSISDN:"
-msgstr ""
-
-#: templates/web/device/dev_list.html:31
+#: .\templates\web\account\acc_list.html:25
+#: .\templates\web\account\detail.html:4
+#: .\templates\web\device\dev_list.html:33
 msgid "Account:"
 msgstr "Tài khoản:"
 
-#: templates/web/device/dev_list.html:64
+#: .\templates\web\account\acc_list.html:66
+msgid "account name"
+msgstr "tên tài khoản"
+
+#: .\templates\web\account\acc_list.html:67
+#: .\templates\web\device\detail.html:107
+#: .\templates\web\device\detail.html:136
+#: .\templates\web\device\detail.html:165
+msgid "mobile"
+msgstr "điện thoại"
+
+#: .\templates\web\account\acc_list.html:68
+msgid "connected devices"
+msgstr "đồng hồ"
+
+#: .\templates\web\account\acc_list.html:69
+#: .\templates\web\device\detail.html:109
+msgid "create time"
+msgstr "ngày tạo"
+
+#: .\templates\web\account\acc_list.html:70
+msgid "last login time"
+msgstr "lần đăng nhập cuối"
+
+#: .\templates\web\account\detail.html:8 .\templates\web\device\detail.html:8
+#: .\templates\web\device\dev_list.html:8
+#: .\templates\web\log\acount_message.html:9
+#: .\templates\web\log\charging.html:9
+#: .\templates\web\log\device_message.html:9
+#: .\templates\web\log\position.html:9 .\templates\web\tools\tools.html:7
+msgid "OPERATION"
+msgstr "VẬN HÀNH"
+
+#: .\templates\web\account\detail.html:9
+msgid "ACCOUNT LIST"
+msgstr ""
+
+#: .\templates\web\account\detail.html:17
+#, fuzzy
+#| msgid "Account List"
+msgid "Account profile"
+msgstr "Tài khoản"
+
+#: .\templates\web\account\detail.html:21
+msgid "MOBILE"
+msgstr ""
+
+#: .\templates\web\account\detail.html:25
+msgid "API KEY"
+msgstr ""
+
+#: .\templates\web\account\detail.html:29
+#, fuzzy
+#| msgid "FIRST ACTIVE TIME"
+msgid "CREATE TIME"
+msgstr "KÍCH HOẠT LẦN ĐẦU"
+
+#: .\templates\web\account\detail.html:37
+#, fuzzy
+#| msgid "Connected accounts"
+msgid "Connected watches"
+msgstr "Tài khoản đang kết nối"
+
+#: .\templates\web\account\detail.html:64
+#: .\templates\web\device\dev_list.html:79
+#: .\templates\web\log\acount_message.html:61
+#: .\templates\web\log\position.html:61
 msgid "ptuid"
 msgstr ""
 
-#: templates/web/device/dev_list.html:65
+#: .\templates\web\account\detail.html:65
+#: .\templates\web\device\detail.html:108
+msgid "account type"
+msgstr "loại"
+
+#: .\templates\web\device\detail.html:5
+#, fuzzy
+#| msgid "Device List"
+msgid "Device:"
+msgstr "Thiết bị"
+
+#: .\templates\web\device\detail.html:9 .\templates\web\device\dev_list.html:8
+msgid "DEVICE LIST"
+msgstr "DANH SÁCH THIẾT BỊ"
+
+#: .\templates\web\device\detail.html:17
+msgid "Watch profile"
+msgstr "Thông tin đồng hồ"
+
+#: .\templates\web\device\detail.html:21
+#: .\templates\web\tools\check_warranty.html:11
+#: .\templates\web\tools\tools.html:58
+msgid "PTUID"
+msgstr ""
+
+#: .\templates\web\device\detail.html:25
+msgid "AKEY"
+msgstr ""
+
+#: .\templates\web\device\detail.html:29
+#: .\templates\web\tools\check_warranty.html:7
+msgid "IMEI"
+msgstr ""
+
+#: .\templates\web\device\detail.html:33
+msgid "MSISDN"
+msgstr ""
+
+#: .\templates\web\device\detail.html:37
+msgid "LAST UPTIME"
+msgstr "LẦN HOẠT ĐỘNG CUỐI"
+
+#: .\templates\web\device\detail.html:41
+msgid "PRODUCE TIME"
+msgstr "NGÀY SẢN XUẤT"
+
+#: .\templates\web\device\detail.html:45
+msgid "FIRST ACTIVE TIME"
+msgstr "KÍCH HOẠT LẦN ĐẦU"
+
+#: .\templates\web\device\detail.html:49
+msgid "PURCHASE ORDER"
+msgstr "ĐƠN HÀNG"
+
+#: .\templates\web\device\detail.html:53
+msgid "COLOR"
+msgstr "MÀU SẮC"
+
+#: .\templates\web\device\detail.html:61
+msgid "Connected accounts"
+msgstr "Tài khoản đang kết nối"
+
+#: .\templates\web\device\detail.html:69
+msgid "Charging history"
+msgstr "Lịch sử gia hạn"
+
+#: .\templates\web\device\detail.html:73
+msgid "SMS History"
+msgstr "Lịch sử tin nhắn"
+
+#: .\templates\web\device\detail.html:77
+msgid "Topup history"
+msgstr "Lịch sử nạp tiền"
+
+#: .\templates\web\device\detail.html:81
+msgid "Unbind history"
+msgstr "Lịch sử ngắt kết nối"
+
+#: .\templates\web\device\detail.html:137
+#: .\templates\web\device\detail.html:166
+#: .\templates\web\device\detail.html:195
+#: .\templates\web\device\detail.html:224
+#: .\templates\web\log\acount_message.html:62
+#: .\templates\web\log\charging.html:72 .\templates\web\log\position.html:62
+msgid "date"
+msgstr "ngày tháng"
+
+#: .\templates\web\device\detail.html:138
+#: .\templates\web\device\detail.html:197 .\templates\web\log\charging.html:73
+msgid "description"
+msgstr "mô tả"
+
+#: .\templates\web\device\detail.html:167
+msgid "content"
+msgstr "nội dung"
+
+#: .\templates\web\device\detail.html:168
+msgid "message"
+msgstr "mô tả"
+
+#: .\templates\web\device\detail.html:193
+msgid "from"
+msgstr "từ"
+
+#: .\templates\web\device\detail.html:194
+msgid "to"
+msgstr "đến"
+
+#: .\templates\web\device\detail.html:196
+msgid "card value"
+msgstr "mệnh giá"
+
+#: .\templates\web\device\detail.html:223
+msgid "account"
+msgstr "Tài khoản"
+
+#: .\templates\web\device\dev_list.html:5
+msgid "Device list"
+msgstr "Thiết bị"
+
+#: .\templates\web\device\dev_list.html:27
+#: .\templates\web\log\acount_message.html:17
+#: .\templates\web\log\position.html:17
+msgid "PTUID:"
+msgstr ""
+
+#: .\templates\web\device\dev_list.html:29
+msgid "IMEI:"
+msgstr ""
+
+#: .\templates\web\device\dev_list.html:31 .\templates\web\log\charging.html:17
+msgid "MSISDN:"
+msgstr ""
+
+#: .\templates\web\device\dev_list.html:80
 msgid "akey"
 msgstr ""
 
-#: templates/web/device/dev_list.html:66
+#: .\templates\web\device\dev_list.html:81
 msgid "imei"
 msgstr ""
 
-#: templates/web/device/dev_list.html:67
+#: .\templates\web\device\dev_list.html:82
 msgid "msisdn"
 msgstr ""
 
-#: templates/web/device/dev_list.html:68
+#: .\templates\web\device\dev_list.html:83
 msgid "connected accounts"
 msgstr "tài khoản"
 
-#: templates/web/device/dev_list.html:69
+#: .\templates\web\device\dev_list.html:84
 msgid "produce time"
 msgstr "ngày s.xuất"
 
-#: templates/web/device/dev_list.html:70
+#: .\templates\web\device\dev_list.html:85
 msgid "first active time"
 msgstr "ngày k.hoạt"
 
-#: vinnet_cms/settings.py:149
+#: .\templates\web\log\acount_message.html:5
+#: .\templates\web\log\acount_message.html:9
+#, fuzzy
+#| msgid "Account List"
+msgid "Acount Message"
+msgstr "Tài khoản"
+
+#: .\templates\web\log\acount_message.html:19
+#: .\templates\web\log\position.html:19
+msgid "Date:"
+msgstr ""
+
+#: .\templates\web\log\acount_message.html:63
+#: .\templates\web\log\position.html:63
+msgid "latitude"
+msgstr ""
+
+#: .\templates\web\log\acount_message.html:64
+#: .\templates\web\log\position.html:64
+msgid "longitude"
+msgstr ""
+
+#: .\templates\web\log\acount_message.html:65
+#: .\templates\web\log\position.html:65
+msgid "radius"
+msgstr ""
+
+#: .\templates\web\log\acount_message.html:66
+#: .\templates\web\log\position.html:66
+msgid "battery"
+msgstr ""
+
+#: .\templates\web\log\acount_message.html:67
+#: .\templates\web\log\position.html:67
+msgid "type"
+msgstr "loại"
+
+#: .\templates\web\log\acount_message.html:68
+#: .\templates\web\log\position.html:68
+msgid "reason"
+msgstr "lý do"
+
+#: .\templates\web\log\charging.html:19
+msgid "Type:"
+msgstr ""
+
+#: .\templates\web\log\charging.html:21
+msgid "From:"
+msgstr ""
+
+#: .\templates\web\log\charging.html:23
+msgid "To:"
+msgstr ""
+
+#: .\templates\web\log\charging.html:71
+msgid "phone"
+msgstr ""
+
+#: .\templates\web\log\charging.html:81
+msgid "--All--"
+msgstr ""
+
+#: .\templates\web\log\charging.html:82
+msgid "Register"
+msgstr ""
+
+#: .\templates\web\log\charging.html:83
+msgid "Recycle"
+msgstr ""
+
+#: .\templates\web\log\device_message.html:5
+#: .\templates\web\log\device_message.html:9
+#, fuzzy
+#| msgid "Device List"
+msgid "Device Message"
+msgstr "Thiết bị"
+
+#: .\templates\web\log\position.html:5 .\templates\web\log\position.html:9
+msgid "Position log"
+msgstr ""
+
+#: .\templates\web\tools\check_balance.html:3
+msgid "Package"
+msgstr ""
+
+#: .\templates\web\tools\check_balance.html:7
+msgid "Balance"
+msgstr ""
+
+#: .\templates\web\tools\check_balance.html:11
+msgid "Free calls"
+msgstr ""
+
+#: .\templates\web\tools\check_balance.html:15
+msgid "Free data"
+msgstr ""
+
+#: .\templates\web\tools\check_balance.html:19
+msgid "Last extended"
+msgstr ""
+
+#: .\templates\web\tools\check_balance.html:23
+msgid "Expire date"
+msgstr ""
+
+#: .\templates\web\tools\check_balance.html:28
+#: .\templates\web\tools\check_warranty.html:28
+msgid "Error"
+msgstr ""
+
+#: .\templates\web\tools\check_map.html:3
+msgid "Response"
+msgstr ""
+
+#: .\templates\web\tools\check_warranty.html:3
+msgid "Model"
+msgstr ""
+
+#: .\templates\web\tools\check_warranty.html:15
+msgid "Status"
+msgstr ""
+
+#: .\templates\web\tools\check_warranty.html:19
+msgid "Valid from"
+msgstr ""
+
+#: .\templates\web\tools\check_warranty.html:23
+msgid "Valid until"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:7
+msgid "TOOLS"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:15
+msgid "Check balance of phon number"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:15
+msgid "Check balance"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:18
+msgid "Phone number"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:22
+msgid "Enter phone number"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:23 .\templates\web\tools\tools.html:42
+#: .\templates\web\tools\tools.html:77
+msgid "Check"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:34
+msgid "Check warranty"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:37
+msgid "IMEI/PTUID"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:41
+msgid "Device IMEI or PTUID"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:53
+msgid "Check map service"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:60
+#, fuzzy
+#| msgid "Device List"
+msgid "Device PTUID"
+msgstr "Thiết bị"
+
+#: .\templates\web\tools\tools.html:64
+msgid "Value"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:70
+msgid "Action"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:73
+msgid "Get"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:74
+msgid "Set"
+msgstr ""
+
+#: .\templates\web\tools\tools.html:75
+msgid "Delete"
+msgstr ""
+
+#: .\vinnet_cms\settings.py:151
 msgid "English"
 msgstr "Tiếng Anh"
 
-#: vinnet_cms/settings.py:150
+#: .\vinnet_cms\settings.py:152
 msgid "Vietnamese"
 msgstr "Tiếng Việt"
 
-#~ msgid "type"
-#~ msgstr "loại"
+#~ msgid "Sub"
+#~ msgstr "Phụ"
+
+#~ msgid "OPERATION &gt; <strong>DEVICE LIST</strong>"
+#~ msgstr "VẬN HÀNH &gt; <strong>DANH SÁCH THIẾT BỊ</strong>"
 
 #~ msgid "View site"
 #~ msgstr "Xem trang"
