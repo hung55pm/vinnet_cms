@@ -215,7 +215,7 @@ def create_acount_message_log_model(for_date):
             model._meta.db_table = table_name
             return model
 
-    class AcountMessage(models.Model):
+    class AcountMessageLog(models.Model):
 
         __metaclass__ = CustomMetaClass
         # define your fileds here
@@ -224,7 +224,7 @@ def create_acount_message_log_model(for_date):
         uptime = models.DateTimeField()
         type = models.IntegerField()
 
-    return AcountMessage
+    return AcountMessageLog
 
 def create_device_message_log_model(for_date):
 

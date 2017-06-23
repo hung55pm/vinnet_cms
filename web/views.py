@@ -97,7 +97,7 @@ class DeviceView(LoginRequiredMixin, TemplateView):
             query = query.filter(cdma_tid=msisdn.strip())
         if account:
             query = query.filter(Wars__account__mobile=account.strip())
-
+        print query.query
         data = {
             "total":query.count(),
             "data": [{
