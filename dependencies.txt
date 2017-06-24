@@ -1,11 +1,12 @@
-# install Visual C++ for Python
+# install Visual C++ for Python hỗ trợ cài đặt các plugin khác
 # https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi
 
 
-# install gettext version >0.15
+# install gettext version >0.15 plugin hỗ trợ đa ngôn ngữ
 #https://mlocati.github.io/articles/gettext-iconv-windows.html
 
 
 pip install requests
+# plugin hỗ trợ mã hóa md5
 pip install PyCrypto
 
